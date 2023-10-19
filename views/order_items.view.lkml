@@ -8,6 +8,11 @@ view: order_items {
   # This primary key is the unique key for this table in the underlying database.
   # You need to define a primary key in a view in order to join to other views.
 
+  dimension: do_not_run {
+    type: string
+    sql: SLEEP(5) ;;
+  }
+
   dimension: id {
     primary_key: yes
     type: number
