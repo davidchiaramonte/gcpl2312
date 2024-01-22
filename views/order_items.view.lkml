@@ -9,6 +9,7 @@ view: order_items {
   # You need to define a primary key in a view in order to join to other views.
 
   dimension: do_not_run {
+    hidden: yes
     type: string
     sql: SLEEP(5) ;;
   }
