@@ -7,12 +7,12 @@ include: "/views/**/*.view.lkml"
 # Datagroups define a caching policy for an Explore. To learn more,
 # use the Quick Help panel on the right to see documentation.
 
-datagroup: david_c_test_default_datagroup {
+datagroup: lookml_demo_default_datagroup {
   # sql_trigger: SELECT MAX(id) FROM etl_log;;
   max_cache_age: "1 hour"
 }
 
-persist_with: david_c_test_default_datagroup
+persist_with: lookml_demo_default_datagroup
 
 # Explores allow you to join together different views (database tables) based on the
 # relationships between fields. By joining a view into an Explore, you make those
@@ -20,6 +20,42 @@ persist_with: david_c_test_default_datagroup
 # Explores should be purpose-built for specific use cases.
 
 # To see the Explore you’re building, navigate to the Explore menu and select an Explore under "David C Test"
+
+explore: order_items {
+  join: orders {
+    type: left_outer
+    sql_on: ${order_items.order_id} = ${orders.id} ;;
+    relationship: many_to_one
+  }
+
+  join: inventory_items {
+    type: left_outer
+    sql_on: ${order_items.inventory_item_id} = ${inventory_items.id} ;;
+    relationship: many_to_one
+  }
+
+  join: users {
+    type: left_outer
+    sql_on: ${orders.user_id} = ${users.id} ;;
+    relationship: many_to_one
+  }
+
+  join: products {
+    type: left_outer
+    sql_on: ${inventory_items.product_id} = ${products.id} ;;
+    relationship: many_to_one
+  }
+}
+
+
+
+
+
+
+
+
+
+
 
 explore: billion_orders {
   join: orders {
@@ -119,32 +155,6 @@ explore: orders {
   join: users {
     type: left_outer
     sql_on: ${orders.user_id} = ${users.id} ;;
-    relationship: many_to_one
-  }
-}
-
-explore: order_items {
-  join: orders {
-    type: left_outer
-    sql_on: ${order_items.order_id} = ${orders.id} ;;
-    relationship: many_to_one
-  }
-
-  join: inventory_items {
-    type: left_outer
-    sql_on: ${order_items.inventory_item_id} = ${inventory_items.id} ;;
-    relationship: many_to_one
-  }
-
-  join: users {
-    type: left_outer
-    sql_on: ${orders.user_id} = ${users.id} ;;
-    relationship: many_to_one
-  }
-
-  join: products {
-    type: left_outer
-    sql_on: ${inventory_items.product_id} = ${products.id} ;;
     relationship: many_to_one
   }
 }
