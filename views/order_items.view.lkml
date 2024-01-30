@@ -8,12 +8,6 @@ view: order_items {
   # This primary key is the unique key for this table in the underlying database.
   # You need to define a primary key in a view in order to join to other views.
 
-  dimension: do_not_run {
-    hidden: yes
-    type: string
-    sql: SLEEP(5) ;;
-  }
-
   dimension: id {
     primary_key: yes
     type: number
@@ -56,6 +50,13 @@ view: order_items {
   dimension: sale_price {
     type: number
     sql: ${TABLE}.sale_price ;;
+    value_format_name: usd
+  }
+
+  dimension: do_not_run {
+    hidden: yes
+    type: string
+    sql: SLEEP(5) ;;
   }
 
   # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
@@ -64,7 +65,9 @@ view: order_items {
 
   measure: total_sale_price {
     type: sum
-    sql: ${sale_price} ;;  }
+    sql: ${sale_price} ;;
+    value_format_name: usd
+    }
   measure: average_sale_price {
     type: average
     sql: ${sale_price} ;;  }

@@ -45,6 +45,7 @@ view: products {
   dimension: retail_price {
     type: number
     sql: ${TABLE}.retail_price ;;
+    #value_format_name: usd
   }
 
   # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
@@ -56,7 +57,9 @@ view: products {
     sql: ${retail_price} ;;  }
   measure: average_retail_price {
     type: average
-    sql: ${retail_price} ;;  }
+    sql: ${retail_price} ;;
+    value_format_name:usd
+    }
 
   dimension: sku {
     type: string
