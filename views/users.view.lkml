@@ -50,6 +50,11 @@ view: users {
     sql: ${TABLE}.email ;;
   }
 
+  dimension: LDAP {
+    type: string
+    sql: SUBSTRING_INDEX(${email},'@',1) ;;
+  }
+
   dimension: first_name {
     type: string
     sql: ${TABLE}.first_name ;;
