@@ -65,6 +65,11 @@ view: users {
     sql: ${TABLE}.last_name ;;
   }
 
+  dimension: full_name {
+    type: string
+    sql: CONCAT(${first_name},' ',${last_name}) ;;
+  }
+
   dimension: gender {
     type: string
     sql: ${TABLE}.gender ;;
@@ -87,6 +92,11 @@ view: users {
   measure: average_age {
     type: average
     sql: ${age} ;;
+  }
+
+  measure: distinct_customer_names {
+    type: count_distinct
+    sql: ${first_name} ;;
   }
 
   # ----- Sets of fields for drilling ------

@@ -58,6 +58,12 @@ view: order_items {
     value_format_name: usd
   }
 
+  measure: distinct_sales_price_sum {
+    type: sum_distinct
+    sql: ${sale_price} ;;
+    value_format_name: usd
+  }
+
   dimension: do_not_run {
     hidden: yes
     type: string

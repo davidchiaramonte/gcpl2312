@@ -18,16 +18,26 @@ view: orders {
 
   dimension_group: created {
     type: time
-    timeframes: [raw, time, date, week, month, quarter, year]
+    timeframes: [raw, time, date, week, month, quarter, second, year]
     sql: ${TABLE}.created_at ;;
   }
     # Here's what a typical dimension looks like in LookML.
     # A dimension is a groupable field that can be used to filter query results.
     # This dimension will be called "Status" in Explore.
 
+  dimension: _created_date2 {
+    type: date
+    sql: DATE_TRUNC(${created_raw},date) ;;
+  }
+
+ dimension: crazy_date_field {
+    type: date_second
+    sql: DATE_TRUNC(${created_raw}) ;;
+  }
+
   dimension: status {
     type: string
-    sql: ${TABLE}.status ;;
+    sql: lower(${TABLE}.status) ;;
   }
 
   dimension: user_id {
@@ -39,6 +49,11 @@ view: orders {
   measure: cancelled_count {
     type: count
     filters: [status: "CANCELLED"]
+  }
+
+  measure: completed_count_last_12_months {
+    type: count
+    filters: [status: "COMPLETED",created_date: "12 months ago for 12 months"]
   }
 
   measure: count {
